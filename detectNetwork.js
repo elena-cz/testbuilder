@@ -106,6 +106,5 @@ var isLengthMatch = function(validLengths, cardLength) {
   return validLengths.includes(cardLength);
 };
 
-console.log(detectNetwork('6226771234567890'));
 
 

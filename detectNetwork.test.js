@@ -71,126 +71,28 @@ var FILL_ME_IN = 'Fill this value in';
 var should = chai.should();
 
 
-//var generateTests = function() {
-  cardNetworks.forEach(function(card){
-    describe(card.network, function() {
-      let prefixes = card.validPrefixes;
-      let validLengths = card.validLengths;
 
-      validLengths.forEach(function(length) {
-        prefixes.forEach(function(prefix) {
-          let cardNum = generateCardNum(prefix, length);
-          it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
+cardNetworks.forEach(function(card){
+  describe(card.network, function() {
+    let prefixes = card.validPrefixes;
+    let validLengths = card.validLengths;
+
+    validLengths.forEach(function(length) {
+      prefixes.forEach(function(prefix) {
+        let cardNum = generateCardNum(prefix, length);
+        it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
+          detectNetwork(cardNum).should.equal(card.network);
+        });
+      });
+    
+      if (card.hasOwnProperty('rangePrefixes')) {
+        for (var i = Number(card.rangePrefixes[0]); i <= Number(card.rangePrefixes[1]); i++) {
+          let cardNum = generateCardNum(i.toString(), length);
+          it('has a prefix of ' + i.toString() + ' and a length of ' + length + '', function() {
             detectNetwork(cardNum).should.equal(card.network);
           });
-        });
-      
-        if (card.hasOwnProperty('rangePrefixes')) {
-          for (var i = Number(card.rangePrefixes[0]); i <= Number(card.rangePrefixes[1]); i++) {
-            let cardNum = generateCardNum(i.toString(), length);
-            it('has a prefix of ' + i.toString() + ' and a length of ' + length + '', function() {
-              detectNetwork(cardNum).should.equal(card.network);
-            });
-          };
-      };
-      });
-    });
-  }); 
-//};
-
-/**
-describe('Diner\'s Club', function() {
-  // The Diner's Club network always starts with a 38 or 39 and is 14 digits long
-  var prefixes = ['38', '39'];
-  var validLengths = [14];
-
-  validLengths.forEach(function(length) {
-    prefixes.forEach(function(prefix) {
-      var cardNum = generateCardNum(prefix, length);
-      it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
-        detectNetwork(cardNum, cardNetworks).should.equal('Diner\'s Club');
-      });
+        };
+    };
     });
   });
-});
-
-describe('American Express', function() {
-  // The American Express network always starts with a 34 or 37 and is 15 digits long
-  var prefixes = ['34', '37'];
-  var validLengths = [15];
-
-  validLengths.forEach(function(length) {
-    prefixes.forEach(function(prefix) {
-      var cardNum = generateCardNum(prefix, length);
-      it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
-        detectNetwork(cardNum).should.equal('American Express');
-      });
-    });
-  });
-});
-
-describe('Visa', function() {
-  // Visa always has a prefix of 4 and a length of 13, 16, or 19.
-  var prefixes = ['4'];
-  var validLengths = [13, 16, 19];
-
-  validLengths.forEach(function(length) {
-    prefixes.forEach(function(prefix) {
-      var cardNum = generateCardNum(prefix, length);
-      it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
-        detectNetwork(cardNum).should.equal('Visa');
-      });
-    });
-  });
-});
-
-describe('MasterCard', function() {
-  // MasterCard always has a prefix of 51, 52, 53, 54, or 55 and a length of 16
-  var prefixes = ['51', '52', '53', '54', '55'];
-  var validLengths = [16];
-
-  validLengths.forEach(function(length) {
-    prefixes.forEach(function(prefix) {
-      var cardNum = generateCardNum(prefix, length);
-      it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
-        detectNetwork(cardNum).should.equal('MasterCard');
-      });
-    });
-  });
-});
-
-describe('Discover', function() {
-  // Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
-  var prefixes = ['6011', '644', '645', '646', '647', '648', '649', '65'];
-  var validLengths = [16, 19];
-
-  validLengths.forEach(function(length) {
-    prefixes.forEach(function(prefix) {
-      var cardNum = generateCardNum(prefix, length);
-      it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
-        detectNetwork(cardNum).should.equal('Discover');
-      });
-    });
-  });
-});
-
-describe('Maestro', function() {
-  // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
-  var prefixes = ['5018', '5020', '5038', '6304'];
-  var validLengths = [12, 13, 14, 15, 16, 17, 18, 19];
-
-  validLengths.forEach(function(length) {
-    prefixes.forEach(function(prefix) {
-      var cardNum = generateCardNum(prefix, length);
-      it('has a prefix of ' + prefix + ' and a length of ' + length + '', function() {
-        detectNetwork(cardNum).should.equal('Maestro');
-      });
-    });
-  });
-});
-
-describe('should support China UnionPay')
-describe('should support Switch')
-**/
-
-
+}); 
